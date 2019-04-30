@@ -7,8 +7,10 @@
 <h1>Hello World!</h1>
 
 <c:forEach var="questionnaire" items="${questionnaires}">
-　　<c:out value="${questionnaire.id}"/><br>
-　　<c:out value="${questionnaire.name}"/><br>
+  <s:link href="question/input/?questionnaireId=${f:u(questionnaire.id)}">
+    <c:out value="${questionnaire.name}"/>
+  </s:link>
+  <br>
 </c:forEach>
 </body>
 </html>
