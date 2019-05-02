@@ -16,7 +16,7 @@ public class QuestionnareService {
 
     public Questionnaires findAll() {
         final String sql = "select * from questionnaire";
-        List<BeanMap> results =  jdbcManager.selectBySql(BeanMap.class, sql).getResultList();
+        final List<BeanMap> results =  jdbcManager.selectBySql(BeanMap.class, sql).getResultList();
 
 		List<Questionnaire> list = new ArrayList<>();
 		for (final BeanMap result : results) {
