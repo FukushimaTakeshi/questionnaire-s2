@@ -10,7 +10,7 @@ import ja.questionnaire.domain.model.question.Questionnaire;
 import org.seasar.extension.jdbc.JdbcManager;
 import org.seasar.framework.beans.util.BeanMap;
 
-public class QuestionnareService {
+public class QuestionnaireService {
     @Resource
     JdbcManager jdbcManager;
 

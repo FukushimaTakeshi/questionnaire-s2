@@ -6,18 +6,18 @@ import javax.annotation.Resource;
 
 import ja.questionnaire.domain.model.question.Questionnaire;
 import org.seasar.struts.annotation.Execute;
-import ja.questionnaire.service.QuestionnareService;
+import ja.questionnaire.service.QuestionnaireService;
 
 public class IndexAction {
 
     @Resource
-    QuestionnareService questionnareService;
+    QuestionnaireService questionnaireService;
 
     public List<Questionnaire> questionnaires;
 
     @Execute(validator = false)
     public String index() {
-    	questionnaires = questionnareService.findAll().list();
+    	questionnaires = questionnaireService.findAll().list();
         return "index.jsp";
     }
 }
