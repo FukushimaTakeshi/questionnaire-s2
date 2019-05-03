@@ -4,14 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 import javax.annotation.Generated;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 /**
  * AnswerUserエンティティクラス
@@ -19,6 +12,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @Generated(value = {"S2JDBC-Gen 2.4.46", "org.seasar.extension.jdbc.gen.internal.model.EntityModelFactoryImpl"}, date = "2019/05/01 13:17:29")
+@Table(name="answer_user")
 public class AnswerUser implements Serializable {
 
     private static final long serialVersionUID = 1L;

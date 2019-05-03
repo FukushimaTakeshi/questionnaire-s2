@@ -3,6 +3,7 @@ package ja.questionnaire.form;
 import org.seasar.struts.annotation.Required;
 
 import java.util.List;
+import java.util.Map;
 
 public class QuestionForm {
     @Required
@@ -11,5 +12,6 @@ public class QuestionForm {
     @Required
     public String name;
 
-    public List<String> answer;
+    public Map<String, String> answer;
+
 }

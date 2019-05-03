@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * AnswerContentエンティティクラス
@@ -18,6 +19,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @Generated(value = {"S2JDBC-Gen 2.4.46", "org.seasar.extension.jdbc.gen.internal.model.EntityModelFactoryImpl"}, date = "2019/05/01 13:17:29")
+@Table(name="answer_content")
 public class AnswerContent implements Serializable {
 
     private static final long serialVersionUID = 1L;
