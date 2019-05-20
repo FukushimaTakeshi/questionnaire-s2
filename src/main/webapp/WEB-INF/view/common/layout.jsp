@@ -1,15 +1,16 @@
-<html>
-<head>
-<title><tiles:getAsString name="title" /></title>
-</head>
-<body>
-<table>
-  <tr><td colspan="2"><tiles:insert page="/common/header.jsp" /></td></tr>
-  <tr>
-    <td width="20%"><tiles:insert page="/common/menu.jsp" /></td>
-    <td><tiles:insert attribute="content" /></td>
-  </tr>
-  <tr><td colspan="2"><tiles:insert page="/common/footer.jsp" /></td></tr>
-</table>
-</body>
+<%@ page pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>アンケートだよ</title>
+  </head>
+  <body>
+    <tiles:insert attribute="content" />
+  </body>
 </html>
