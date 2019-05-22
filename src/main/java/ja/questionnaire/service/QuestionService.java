@@ -7,9 +7,7 @@ import org.seasar.framework.beans.util.BeanMap;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class QuestionService {
     @Resource
@@ -33,17 +31,11 @@ public class QuestionService {
     }
 
     private List<BeanMap> findDetails(List<BeanMap> questions) {
-        Map<String, List<Long>> questionIds = new HashMap<>();
-        questionIds.put("questionIds", questionIds(questions));
-        return jdbcManager.selectBySqlFile(BeanMap.class, "sqls/questionDetailByQuestionId.sql", questionIds).getResultList();
-    }
-
-    private List<Long> questionIds(List<BeanMap> questions) {
-        List<Long> questionIds = new ArrayList<>();
+        Param param = new Param();
         for (final BeanMap question : questions) {
-            questionIds.add(Long.parseLong(question.get("questionId").toString()));
+        	param.questionIds.add(Long.parseLong(question.get("questionId").toString()));
         }
-        return questionIds;
+        return jdbcManager.selectBySqlFile(BeanMap.class, "sqls/questionDetailByQuestionId.sql", param).getResultList();
     }
 
     private List<BeanMap> collectDetails(final List<BeanMap> details, final Long questionId) {
@@ -54,5 +46,10 @@ public class QuestionService {
             }
         }
         return collectedDetails;
+    }
+
+    public class Param {
+        public List<Long> questionIds;
+        Param() { questionIds = new ArrayList<>(); }
     }
 }
