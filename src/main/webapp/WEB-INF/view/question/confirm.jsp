@@ -48,13 +48,13 @@
                                                 <c:if test="${question.id == questionAndAnswer.key}">
                                                     <c:if test="${question.type == 0001}">
                                                         回答: ${f:h(questionAndAnswer.value)}
-                                                        <input type="hidden" name="answer.${question.id}" value="${f:h(questionAndAnswer.value)}"/>
+                                                        <input type="hidden" name="answers.${question.id}" value="${f:h(questionAndAnswer.value)}"/>
                                                     </c:if>
                                                     <c:if test="${question.type == 0002}">
                                                         <c:forEach var="detailContent" items="${question.detailContent}">
                                                             <c:if test="${detailContent.questionDetailId == questionAndAnswer.value}">
                                                                 回答: ${f:h(detailContent.questionDetailContent)}
-                                                                <input type="hidden" name="answer.${question.id}" value="${f:h(detailContent.questionDetailId)}">
+                                                                <input type="hidden" name="answers.${question.id}" value="${f:h(detailContent.questionDetailId)}">
                                                                 <br>
                                                             </c:if>
                                                         </c:forEach>

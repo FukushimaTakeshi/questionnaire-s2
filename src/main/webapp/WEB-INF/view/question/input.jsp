@@ -44,14 +44,14 @@
 
                                         <div class="control">
                                             <c:if test="${question.type == 0001}">
-                                                <textarea name="answer.${question.id}" class="textarea">${f:h(answer.question.id)}</textarea>
+                                                <textarea name="answers.${question.id}" class="textarea">${f:h(answers.question.id)}</textarea>
                                             </c:if>
 
                                             <c:if test="${question.type == 0002}">
                                                 <c:forEach var="detailContent" items="${question.detailContent}">
                                                     <div class="field">
                                                         <label class="radio">
-                                                            <input type="radio" name="answer.${question.id}" value="${f:h(detailContent.questionDetailId)}">
+                                                            <input type="radio" name="answers.${question.id}" value="${f:h(detailContent.questionDetailId)}">
                                                             <c:out value="${detailContent.questionDetailContent}"/>
                                                         </label>
                                                     </div>

@@ -1,8 +1,8 @@
 package ja.questionnaire.form;
 
+import org.seasar.struts.annotation.Mask;
 import org.seasar.struts.annotation.Required;
 
-import java.util.List;
 import java.util.Map;
 
 public class QuestionForm {
@@ -10,8 +10,8 @@ public class QuestionForm {
     public String questionnaireId;
 
     @Required
+    @Mask(mask = "^(?!.*[!-/:-@¥[-`{-~！”＃＄％＆’（）＊＋，−．／：；＜＝＞？＠［￥］＾＿｀｛｜｝〜]).*$")
     public String name;
 
-    public Map<String, String> answer;
-
+    public Map<String, String> answers;
 }
