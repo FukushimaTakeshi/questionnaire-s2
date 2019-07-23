@@ -22,4 +22,7 @@ public class Question {
     public String getType() { return type; }
     public String getContent() { return content; }
     public List<BeanMap> getDetailContent() { return detailContent; }
+
+    boolean isText() { return type.equals("0001"); }
+    boolean isRadio() { return type.equals("0002"); }
 }

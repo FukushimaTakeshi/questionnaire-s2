@@ -1,6 +1,7 @@
 package ja.questionnaire.action;
 
 import ja.questionnaire.domain.model.question.Question;
+import ja.questionnaire.domain.model.question.Questions;
 import ja.questionnaire.domain.model.question.QuestionsAndAnswers;
 import ja.questionnaire.form.QuestionForm;
 import ja.questionnaire.service.AnswerService;
@@ -8,12 +9,12 @@ import ja.questionnaire.service.QuestionService;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.validator.GenericValidator;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.seasar.struts.annotation.ActionForm;
 import org.seasar.struts.annotation.Execute;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -59,21 +60,23 @@ public class QuestionAction {
     
     public ActionMessages validateAnswers() {
         ActionMessages errors = new ActionMessages();
+        Questions questions = questionService.findAll(form.questionnaireId);
 
-        List<String> radioQuestions = new ArrayList<>();
-        List<Question> questions = questionService.findAll(form.questionnaireId).list();
-        for (Question question : questions) {
-            if (question.getType().equals("0002")) {
-                radioQuestions.add(question.getId());
+        for (Question question : questions.list()) {
+            if (!form.answers.containsKey(question.getId())) {
+                errors.add(GLOBAL_MESSAGE, new ActionMessage("未回答の質問があります", false));
             }
         }
 
         for (Map.Entry<String, String> answerMap : form.answers.entrySet()) {
             if (StringUtils.isEmpty(answerMap.getValue())) {
                 errors.add(GLOBAL_MESSAGE, new ActionMessage("未回答の質問があります", false));
-            } else if (radioQuestions.contains(answerMap.getKey()) &&
+            } else if (questions.isRadio(answerMap.getKey()) &&
                     (!NumberUtils.isNumber(answerMap.getKey()) || !NumberUtils.isNumber(answerMap.getValue()))) {
-                    errors.add(GLOBAL_MESSAGE, new ActionMessage("不正な値があります", false));
+                errors.add(GLOBAL_MESSAGE, new ActionMessage("不正な値があります", false));
+            } else if (questions.isText(answerMap.getKey()) &&
+                    !GenericValidator.maxLength(answerMap.getValue(), 10)) {
+                errors.add(GLOBAL_MESSAGE, new ActionMessage("回答内容の長さが最大値(10)を超えています", false));
             }
         }
         return errors;
