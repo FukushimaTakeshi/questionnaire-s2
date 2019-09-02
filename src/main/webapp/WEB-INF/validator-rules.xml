@@ -334,6 +334,17 @@
                        javax.servlet.http.HttpServletRequest"
               depends="long"
                   msg="errors.range"/>
+      
+      <validator name="halfAndFullMaxLength"
+                 classname="ja.questionnaire.validator.CharacterValidator"
+                 method="validateHalfAndFullMaxLength"
+                 methodParams="java.lang.Object,
+                       org.apache.commons.validator.ValidatorAction,
+                       org.apache.commons.validator.Field,
+                       org.apache.struts.action.ActionMessages,
+                       org.apache.commons.validator.Validator,
+                       javax.servlet.http.HttpServletRequest"
+                 msg="errors.maxlength"/>
 
      <!--
        This simply allows struts to include the validateUtilities into a page, it should

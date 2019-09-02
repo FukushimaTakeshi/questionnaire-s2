@@ -1,7 +1,7 @@
 package ja.questionnaire.form;
 
+import ja.questionnaire.validator.annotation.HalfAndFullMaxLength;
 import org.seasar.struts.annotation.Mask;
-import org.seasar.struts.annotation.Maxlength;
 import org.seasar.struts.annotation.Required;
 
 import java.util.Map;
@@ -12,7 +12,7 @@ public class QuestionForm {
 
     @Required
     @Mask(mask = "^(?!.*[!-/:-@¥[-`{-~！”＃＄％＆’（）＊＋，−．／：；＜＝＞？＠［￥］＾＿｀｛｜｝〜]).*$")
-    @Maxlength(maxlength = 30)
+    @HalfAndFullMaxLength(maxlength = 60)
     public String name;
 
     public Map<String, String> answers;
