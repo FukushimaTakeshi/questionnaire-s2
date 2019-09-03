@@ -7,16 +7,12 @@ import ja.questionnaire.form.QuestionForm;
 import ja.questionnaire.service.AnswerService;
 import ja.questionnaire.service.QuestionService;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
-import org.apache.commons.validator.GenericValidator;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.seasar.struts.annotation.ActionForm;
 import org.seasar.struts.annotation.Execute;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -46,38 +42,27 @@ public class QuestionAction {
 
     @Execute(validator = true, validate = "validateAnswers", input = "input")
     public String confirm() {
-        questions = questionService.findAll(form.questionnaireId).list();
-        questionsAndAnswers = new QuestionsAndAnswers(form.name, form.answers, questions);
+        Questions questionList = questionService.findAll(form.questionnaireId);
+        questionsAndAnswers = new QuestionsAndAnswers(form.name, form.answers, questionList);
+        questions = questionList.list();
         return "confirm.jsp";
     }
 
     @Execute(validator = true, validate = "validateAnswers", input = "input")
     public String create() {
-    	questions = questionService.findAll(form.questionnaireId).list();
-        answerService.create(form.questionnaireId, new QuestionsAndAnswers(form.name, form.answers, questions));
+        Questions questionList = questionService.findAll(form.questionnaireId);
+        answerService.create(form.questionnaireId, new QuestionsAndAnswers(form.name, form.answers, questionList));
+        questions = questionList.list();
         return "create.jsp";
     }
     
     public ActionMessages validateAnswers() {
-        ActionMessages errors = new ActionMessages();
         Questions questions = questionService.findAll(form.questionnaireId);
+        QuestionsAndAnswers questionsAndAnswers = new QuestionsAndAnswers(form.name, form.answers, questions);
 
-        for (Question question : questions.list()) {
-            if (!form.answers.containsKey(question.getId())) {
-                errors.add(GLOBAL_MESSAGE, new ActionMessage("未回答の質問があります", false));
-            }
-        }
-
-        for (Map.Entry<String, String> answerMap : form.answers.entrySet()) {
-            if (StringUtils.isEmpty(answerMap.getValue())) {
-                errors.add(GLOBAL_MESSAGE, new ActionMessage("未回答の質問があります", false));
-            } else if (questions.isRadio(answerMap.getKey()) &&
-                    (!NumberUtils.isNumber(answerMap.getKey()) || !NumberUtils.isNumber(answerMap.getValue()))) {
-                errors.add(GLOBAL_MESSAGE, new ActionMessage("不正な値があります", false));
-            } else if (questions.isText(answerMap.getKey()) &&
-                    !GenericValidator.maxLength(answerMap.getValue(), 10)) {
-                errors.add(GLOBAL_MESSAGE, new ActionMessage("回答内容の長さが最大値(10)を超えています", false));
-            }
+        ActionMessages errors = new ActionMessages();
+        for (String error : questionsAndAnswers.errors()) {
+            errors.add(GLOBAL_MESSAGE, new ActionMessage(error, false));
         }
         return errors;
     }
