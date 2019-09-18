@@ -25,7 +25,8 @@
                                 </div>
                             </div>
                             <html:errors />
-                            <s:form action="create/?questionnaireId=${f:u(form.questionnaireId)}" method="POST">
+                            <s:form method="POST">
+                                <input type="hidden" name="questionnaireId" value="${f:u(form.questionnaireId)}"/>
                                 <div class="content article-body">
                                     <div class="field">
                                         <label class="label">名前</label>
@@ -66,7 +67,12 @@
                                 </c:forEach>
                                 <div class="field">
                                     <div class="control">
-                                        <s:submit value="送信するよ" styleClass="button is-block is-info is-fullwidth" />
+                                        <s:submit property="create" value="送信するよ" styleClass="button is-block is-info is-fullwidth" />
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <s:submit property="input" value="戻る" styleClass="button is-block is-light is-fullwidth" />
                                     </div>
                                 </div>
                             </s:form>
