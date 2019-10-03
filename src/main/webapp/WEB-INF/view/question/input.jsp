@@ -44,14 +44,26 @@
 
                                         <div class="control">
                                             <c:if test="${question.type == 0001}">
-                                                <textarea name="answers.${question.id}" class="textarea">${f:h(answers.question.id)}</textarea>
+                                                <textarea name="answers.${question.id}" class="textarea">${f:h(answers[question.id])}</textarea>
                                             </c:if>
-
                                             <c:if test="${question.type == 0002}">
-                                                <c:forEach var="detailContent" items="${question.detailContent}">
+                                                <c:forEach var="detailContent" items="${question.detailContent}" varStatus="innerStatus">
                                                     <div class="field">
                                                         <label class="radio">
-                                                            <input type="radio" name="answers.${question.id}" value="${f:h(detailContent.questionDetailId)}">
+
+                                                            <c:if test="${!empty questionsAndAnswers.questionsAndAnswers}">
+                                                                <c:forEach var="questionAndAnswer" items="${questionsAndAnswers.questionsAndAnswers}" >
+                                                                    <c:if test="${questionAndAnswer.value == f:h(detailContent.questionDetailId)}">
+                                                                        <c:set var="answerValue" value="${questionAndAnswer.value}" />
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                            </c:if>
+
+                                                            <input type="radio" name="answers.${question.id}" value="${f:h(detailContent.questionDetailId)}"
+                                                                <c:if test="${answerValue == f:h(detailContent.questionDetailId)}">
+                                                                    checked="checked"
+                                                                </c:if>
+                                                            />
                                                             <c:out value="${detailContent.questionDetailContent}"/>
                                                         </label>
                                                     </div>
