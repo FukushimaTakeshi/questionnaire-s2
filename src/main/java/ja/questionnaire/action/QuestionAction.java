@@ -12,7 +12,6 @@ import org.apache.struts.action.ActionMessages;
 import org.seasar.struts.annotation.ActionForm;
 import org.seasar.struts.annotation.Execute;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
