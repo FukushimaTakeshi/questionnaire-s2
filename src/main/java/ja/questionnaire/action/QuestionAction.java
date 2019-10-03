@@ -1,6 +1,5 @@
 package ja.questionnaire.action;
 
-import ja.questionnaire.domain.model.question.Answer;
 import ja.questionnaire.domain.model.question.Question;
 import ja.questionnaire.domain.model.question.Questions;
 import ja.questionnaire.domain.model.question.QuestionsAndAnswers;
@@ -8,17 +7,13 @@ import ja.questionnaire.form.QuestionForm;
 import ja.questionnaire.service.AnswerService;
 import ja.questionnaire.service.QuestionService;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.seasar.struts.annotation.ActionForm;
 import org.seasar.struts.annotation.Execute;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -39,8 +34,6 @@ public class QuestionAction {
     public List<Question> questions;
 
     public QuestionsAndAnswers questionsAndAnswers;
-    
-    public List<String> answerIds = new ArrayList<>();
 
     @Execute(validator = false)
     public String input() {
