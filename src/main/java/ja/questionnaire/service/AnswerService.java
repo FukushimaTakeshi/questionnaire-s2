@@ -7,12 +7,12 @@ import ja.questionnaire.entity.AnswerContent;
 import ja.questionnaire.entity.AnswerContentRadio;
 import ja.questionnaire.entity.AnswerContentText;
 import ja.questionnaire.entity.AnswerUser;
-import ja.questionnaire.service.factory.AnswerDetailFactory;
 import org.seasar.extension.jdbc.JdbcManager;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class AnswerService {
@@ -32,18 +32,18 @@ public class AnswerService {
             answerContent.questionId = Long.parseLong(questionAnswerEntry.getKey().getId());
             jdbcManager.insert(answerContent).execute();
 
-            DetailSelector detail = AnswerDetailFactory.detailByType(questionAnswerEntry.getKey().getType());
-            detail.createDetail(jdbcManager, answerContent.answerContentId, questionAnswerEntry.getValue().toString());
+            DetailSelector detail = AnswerDetailFactory.detailBy(questionAnswerEntry.getKey().getType());
+            detail.create(jdbcManager, answerContent.answerContentId, questionAnswerEntry.getValue().toString());
         }
     }
 
-    public interface DetailSelector {
-       void createDetail(JdbcManager jdbcManager, Long answerContentId, String detailContent);
+    interface DetailSelector {
+       void create(JdbcManager jdbcManager, Long answerContentId, String detailContent);
     }
 
-    public static class TextDetail implements DetailSelector {
+    static class TextDetail implements DetailSelector {
         @Override
-        public void createDetail(JdbcManager jdbcManager,Long answerContentId, String detailContent) {
+        public void create(JdbcManager jdbcManager,Long answerContentId, String detailContent) {
             AnswerContentText answerContentText = new AnswerContentText();
             answerContentText.answerContentId = answerContentId;
             answerContentText.answerContentAnswerContentId = detailContent;
@@ -51,13 +51,29 @@ public class AnswerService {
         }
     }
 
-    public static class RadioDetail implements DetailSelector {
+    static class RadioDetail implements DetailSelector {
         @Override
-        public void createDetail(JdbcManager jdbcManager,Long answerContentId, String detailContent) {
+        public void create(JdbcManager jdbcManager,Long answerContentId, String detailContent) {
             AnswerContentRadio answerContentRadio = new AnswerContentRadio();
             answerContentRadio.answerContentId = answerContentId;
             answerContentRadio.questionDetailId = Long.parseLong(detailContent);
             jdbcManager.insert(answerContentRadio).execute();
         }
+    }
+
+    static class AnswerDetailFactory {
+        private static Map<String, DetailSelector> types;
+
+        static {
+            types = new HashMap<>();
+            types.put("0001", new TextDetail());
+            types.put("0002", new RadioDetail());
+        }
+
+        static DetailSelector detailBy(String type) {
+            return types.get(type);
+        }
+
+        AnswerDetailFactory() {}
     }
 }
