@@ -59,7 +59,12 @@ public class QuestionAction {
         Questions questionList = questionService.findAll(form.questionnaireId);
         answerService.create(form.questionnaireId, new QuestionsAndAnswers(form.name, form.answers, questionList));
         questions = questionList.list();
-        return "create.jsp";
+        return "complete?redirect=true";
+    }
+
+    @Execute(validator = false)
+    public String complete() {
+        return "complete.jsp";
     }
     
     public ActionMessages validateAnswers() {
